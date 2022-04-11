@@ -1,0 +1,70 @@
+<college> ::= college: \n name:<ALPHANUMERICSYMBOL> \n departments: \n <department>\n END\n. \nEND
+
+<department> ::= department:\n name: <ALPHANUMERICSYMBOL>\n classes:\n <classes>END\n chair:\n <person>\n END \n END\n
+
+<people> ::= person: \n <person>  \nEND\n .
+
+<classes> ::= class: \n<class> \nEND\n .
+
+<person> ::= person:\n name:<ALPHANUMERICSYMBOL> \n role:<role>\n year:<year>\nEND\n
+
+<class> ::=  class: \n name: <ALPHANUMERICSYMBOL> \n number:<number>\n section<section>\n instructor:\n<person>\n END\n roster:\n <people> \nEND\n
+
+<number>::= <0-4><0-9><0-9>
+
+<section> ::= <0-9><0-9>
+
+<role> ::= "Professor" | "Student"
+
+<year> ::= "NA" | "2025" | "2024" | "2023" | "2022"
+
+<ALPHANUMERICSYMBOL> ::= “<a-zA-Z0-9,’/?<>!@#$%^&*()>*”
+
+
+
+
+
+College: 
+Name: “Carleton College”
+Departments:
+	Department:
+		Name: CS
+		Chair:
+			Person:
+				Name: DLN
+				Role: Professor
+				Year: N/A
+				END
+			END
+		Classes:
+			Class:
+				Name: software design
+				Number: 257
+				Section: 01
+				Instructor: 	
+					Person:
+						Name: James Ryan
+						Role: Professor
+						Year: N/A
+						END
+					END
+				Roster:
+					Person:
+						Name: Aiden Chang
+						Role: Student
+						Year: 2023
+					END
+Person:
+						Name: Owen Barnett
+						Role: Student
+						Year: 2022
+					END
+				END
+			END
+		END			
+	END
+END
+END
+	
+
+

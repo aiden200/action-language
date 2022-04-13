@@ -25,45 +25,45 @@
 
 
 College: 
-Name: “Carleton College”
-Departments:
-	Department:
-		Name: CS
-		Chair:
-			Person:
-				Name: DLN
-				Role: Professor
-				Year: N/A
-				END
-			END
-		Classes:
-			Class:
-				Name: software design
-				Number: 257
-				Section: 01
-				Instructor: 	
-					Person:
-						Name: James Ryan
-						Role: Professor
-						Year: N/A
-						END
-					END
-				Roster:
-					Person:
-						Name: Aiden Chang
-						Role: Student
-						Year: 2023
-					END
-Person:
-						Name: Owen Barnett
-						Role: Student
-						Year: 2022
-					END
-				END
-			END
-		END			
-	END
-END
+    Name: “Carleton College”
+    Departments:
+        Department:
+            Name: CS
+            Chair:
+                Person:
+                    Name: DLN
+                    Role: Professor
+                    Year: N/A
+                END
+            END
+            Classes:
+                Class:
+                    Name: software design
+                    Number: 257
+                    Section: 01
+                    Instructor: 	
+                        Person:
+                            Name: James Ryan
+                            Role: Professor
+                            Year: N/A
+                            END
+                        END
+                    Roster:
+                        Person:
+                            Name: Aiden Chang
+                            Role: Student
+                            Year: 2023
+                        END
+                        Person:
+                            Name: Owen Barnett
+                            Role: Student
+                            Year: 2022
+                        END
+                    END
+                END
+            END			
+        END
+    END
 END
 	
 

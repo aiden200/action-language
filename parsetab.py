@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CLASS_TOKEN END INSTRUCTER_TOKEN NAME_TOKEN NEWLINE NUMBER NUMBER_TOKEN PERSON_TOKEN ROLE_TOKEN ROSTER_TOKEN SECTION_TOKEN STRING YEAR_TOKENstatement : classclass : CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE ENDnumber : NUMBER_TOKEN NUMBERsection : SECTION_TOKEN NUMBERroster : personroster : roster NEWLINE personperson : PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE ENDrole : ROLE_TOKEN STRINGname : NAME_TOKEN STRINGyear : YEAR_TOKEN NUMBER'
+_lr_signature = 'CLASS_TOKEN COLON DEPARTMENT_TOKEN END INSTRUCTER_TOKEN NAME_TOKEN NEWLINE NUMBER NUMBER_TOKEN PERSON_TOKEN ROLE_TOKEN ROSTER_TOKEN SECTION_TOKEN STRING VARIABLE YEAR_TOKENstatement : classstatement : variablesvariables : variable NEWLINE variablevariables : variablevariable : VARIABLE COLON personclass : CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE ENDnumber : NUMBER_TOKEN NUMBERsection : SECTION_TOKEN NUMBERroster : personroster : roster NEWLINE personperson : PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE ENDperson : PERSON_TOKEN VARIABLEperson : PERSON_TOKEN VARIABLE COLON NEWLINE overrides NEWLINE ENDoverride : yearoverride : roleoverride : nameoverrides : overrideoverrides : overrides NEWLINE overriderole : ROLE_TOKEN STRINGname : NAME_TOKEN STRINGyear : YEAR_TOKEN NUMBER'
     
-_lr_action_items = {'CLASS_TOKEN':([0,],[3,]),'$end':([1,2,73,],[0,-1,-2,]),'NEWLINE':([3,5,8,9,12,13,16,17,19,20,23,24,25,26,33,34,35,36,37,38,39,40,41,49,50,51,52,53,54,55,56,64,65,66,67,68,69,70,71,],[4,7,-14,11,-3,15,-4,18,21,22,29,30,31,32,-13,-15,42,43,44,45,46,47,48,-5,57,58,59,60,61,62,63,-6,72,-7,-8,-9,-10,-11,-12,]),'NAME_TOKEN':([4,22,31,32,46,47,],[6,6,6,6,6,6,]),'STRING':([6,27,],[8,33,]),'NUMBER_TOKEN':([7,],[10,]),'NUMBER':([10,14,28,],[12,16,34,]),'SECTION_TOKEN':([11,],[14,]),'INSTRUCTER_TOKEN':([15,],[17,]),'PERSON_TOKEN':([18,42,57,],[20,20,20,]),'END':([21,57,58,59,60,61,62,63,72,],[23,65,66,67,68,69,70,71,73,]),'ROLE_TOKEN':([22,30,32,44,48,],[27,27,27,27,27,]),'YEAR_TOKEN':([22,30,31,43,45,],[28,28,28,28,28,]),'ROSTER_TOKEN':([29,],[35,]),}
+_lr_action_items = {'CLASS_TOKEN':([0,],[4,]),'VARIABLE':([0,8,14,],[6,6,18,]),'$end':([1,2,3,5,12,13,18,64,74,75,76,77,78,79,91,],[0,-1,-2,-4,-3,-5,-17,-18,-11,-12,-13,-14,-15,-16,-6,]),'NEWLINE':([4,5,10,13,14,16,18,19,21,22,23,26,28,32,33,35,37,38,39,40,41,42,43,44,45,46,47,49,57,58,59,60,61,62,63,64,65,73,74,75,76,77,78,79,81,83,85,86,88,89,],[7,8,15,-5,17,-25,-17,27,29,30,31,34,-7,-24,-26,48,50,51,52,53,54,55,56,-22,-19,-20,-21,-8,66,67,68,69,70,71,72,-18,-23,80,-11,-12,-13,-14,-15,-16,82,84,-9,87,-10,90,]),'COLON':([6,18,],[9,26,]),'NAME_TOKEN':([7,17,30,31,34,53,54,56,],[11,11,11,11,11,11,11,11,]),'PERSON_TOKEN':([9,66,84,87,],[14,14,14,14,]),'STRING':([11,24,],[16,32,]),'NUMBER_TOKEN':([15,],[20,]),'ROLE_TOKEN':([17,29,31,34,51,55,56,],[24,24,24,24,24,24,24,]),'YEAR_TOKEN':([17,29,30,34,50,52,56,],[25,25,25,25,25,25,25,]),'NUMBER':([20,25,36,],[28,33,49,]),'SECTION_TOKEN':([27,],[36,]),'INSTRUCTER_TOKEN':([48,],[57,]),'END':([56,67,68,69,70,71,72,80,87,90,],[64,74,75,76,77,78,79,81,89,91,]),'ROSTER_TOKEN':([82,],[83,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'class':([0,],[2,]),'name':([4,22,31,32,46,47,],[5,24,38,41,54,55,]),'number':([7,],[9,]),'section':([11,],[13,]),'person':([18,42,57,],[19,49,64,]),'role':([22,30,32,44,48,],[25,36,40,52,56,]),'year':([22,30,31,43,45,],[26,37,39,51,53,]),'roster':([42,],[50,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'class':([0,],[2,]),'variables':([0,],[3,]),'variable':([0,8,],[5,12,]),'name':([7,17,30,31,34,53,54,56,],[10,21,39,42,47,61,62,47,]),'person':([9,66,84,87,],[13,73,85,88,]),'number':([15,],[19,]),'role':([17,29,31,34,51,55,56,],[22,37,41,46,59,63,46,]),'year':([17,29,30,34,50,52,56,],[23,38,40,45,58,60,45,]),'section':([27,],[35,]),'overrides':([34,],[43,]),'override':([34,56,],[44,65,]),'roster':([84,],[86,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,19 +27,30 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> class','statement',1,'p_statement_assign','parser.py',76),
-  ('class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END','class',21,'p_class','parser.py',79),
-  ('number -> NUMBER_TOKEN NUMBER','number',2,'p_number','parser.py',87),
-  ('section -> SECTION_TOKEN NUMBER','section',2,'p_section','parser.py',91),
-  ('roster -> person','roster',1,'p_roster_one','parser.py',95),
-  ('roster -> roster NEWLINE person','roster',3,'p_roster_two','parser.py',99),
-  ('person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END','person',9,'p_person','parser.py',106),
-  ('person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END','person',9,'p_person_one','parser.py',111),
-  ('person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END','person',9,'p_person_two','parser.py',116),
-  ('person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END','person',9,'p_person_three','parser.py',121),
-  ('person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END','person',9,'p_person_four','parser.py',126),
-  ('person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END','person',9,'p_person_five','parser.py',131),
-  ('role -> ROLE_TOKEN STRING','role',2,'p_role','parser.py',137),
-  ('name -> NAME_TOKEN STRING','name',2,'p_name','parser.py',141),
-  ('year -> YEAR_TOKEN NUMBER','year',2,'p_year','parser.py',145),
+  ('statement -> class','statement',1,'p_statement_assign','parser.py',103),
+  ('statement -> variables','statement',1,'p_statement_assign_var','parser.py',106),
+  ('variables -> variable NEWLINE variable','variables',3,'p_variables','parser.py',109),
+  ('variables -> variable','variables',1,'p_variables_single','parser.py',112),
+  ('variable -> VARIABLE COLON person','variable',3,'p_variable','parser.py',115),
+  ('class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END','class',21,'p_class','parser.py',119),
+  ('number -> NUMBER_TOKEN NUMBER','number',2,'p_number','parser.py',127),
+  ('section -> SECTION_TOKEN NUMBER','section',2,'p_section','parser.py',131),
+  ('roster -> person','roster',1,'p_roster_one','parser.py',135),
+  ('roster -> roster NEWLINE person','roster',3,'p_roster_two','parser.py',139),
+  ('person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END','person',9,'p_person','parser.py',147),
+  ('person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END','person',9,'p_person_one','parser.py',152),
+  ('person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END','person',9,'p_person_two','parser.py',157),
+  ('person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END','person',9,'p_person_three','parser.py',162),
+  ('person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END','person',9,'p_person_four','parser.py',167),
+  ('person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END','person',9,'p_person_five','parser.py',172),
+  ('person -> PERSON_TOKEN VARIABLE','person',2,'p_person_var','parser.py',176),
+  ('person -> PERSON_TOKEN VARIABLE COLON NEWLINE overrides NEWLINE END','person',7,'p_person_var_override','parser.py',181),
+  ('override -> year','override',1,'p_override_year','parser.py',186),
+  ('override -> role','override',1,'p_override_role','parser.py',190),
+  ('override -> name','override',1,'p_override_name','parser.py',194),
+  ('overrides -> override','overrides',1,'p_override','parser.py',198),
+  ('overrides -> overrides NEWLINE override','overrides',3,'p_overrides','parser.py',202),
+  ('role -> ROLE_TOKEN STRING','role',2,'p_role','parser.py',206),
+  ('name -> NAME_TOKEN STRING','name',2,'p_name','parser.py',210),
+  ('year -> YEAR_TOKEN NUMBER','year',2,'p_year','parser.py',214),
 ]

@@ -7,8 +7,9 @@ import json
 
 
 tokens = (
-    'STRING', 'PERSON_TOKEN', 'NAME_TOKEN', "ROLE_TOKEN", "NEWLINE", "END", "NUMBER", "SECTION_TOKEN", 
-    "NUMBER_TOKEN", "INSTRUCTER_TOKEN", "ROSTER_TOKEN", "CLASS_TOKEN", "DEPARTMENT_TOKEN", "YEAR_TOKEN"
+
+    'STRING', 'PERSON_TOKEN', 'NAME_TOKEN', "ROLE_TOKEN", "YEAR_TOKEN", "NEWLINE", "END", "NUMBER", "SECTION_TOKEN", 
+    "NUMBER_TOKEN", "INSTRUCTER_TOKEN", "ROSTER_TOKEN", "CLASS_TOKEN", "DEPARTMENT_TOKEN", "VARIABLE", "COLON"
 )
 
 t_STRING    = r'\"[a-zA-Z0-9_]*\"'
@@ -25,13 +26,16 @@ t_CLASS_TOKEN = r'class:|Class:'
 t_NEWLINE = r'\n'
 t_END = r'END'
 t_NUMBER = r'[0-9]+'
-
+t_VARIABLE    = r'%[a-zA-Z0-9_]*'
+t_COLON = r':'
 
 # Ignored characters
 t_ignore = " \t"
     
 class_list = []
 people_list = []
+
+binding = {}
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
@@ -40,10 +44,31 @@ def t_error(t):
 lexer = lex.lex()
 
 class person_class:
-    def __init__(self, name, role, year):
+    def __init__(self, name, role, year, variable = None, overrides = None):
         self.name = name
         self.role = role
         self.year = year
+        self.variable = variable
+        self.overrides = overrides
+    
+    def eval_self(self):
+        if(self.variable != None and self.variable in binding.keys()):
+            binding[self.variable].eval_self()
+            self.name = binding[self.variable].name
+            self.role = binding[self.variable].role
+            self.year = binding[self.variable].year
+
+            if(self.overrides != None):
+                for override in self.overrides:
+                    if override[0] == "Name":
+                        self.name = override[1]
+                    if override[0] == "Year":
+                        self.year = override[1]
+                    if override[0] == "Role":
+                        self.role = override[1]
+
+        return self
+
 
     def error_check(self):
         if self.name == None or self.role == None or self.year == None:
@@ -82,6 +107,7 @@ class class_class:
     def print_myself(self, depth):
         roster_dic = {}
         for student in self.roster:
+
             roster_dic["student"] = student.print_myself(depth)
         return {"Class":{"name" : self.name, "number" : self.number, "section" : self.section, "Instructer" : self.instructer.print_myself(depth + 1)}, "roster": roster_dic}
         # print('\t'*depth + "Class: name - " + self.name + ", number - " + self.number + ", section - " + self.section, end = "\n" + '\t'*(depth) + "instructer: \n")
@@ -91,6 +117,7 @@ class class_class:
         #     print('\t'*(depth), end= "")
         #     student.print_myself(depth)
        
+
 class department_class:
     def init(self, name, chair, classes):
         self.name = name
@@ -103,6 +130,20 @@ class department_class:
 # def p_statement_assign(t):
 #     'statement : class'
 
+
+
+def p_statement_assign_var(t):
+    'statement : variables'
+
+def p_variables(t):
+    'variables : variable NEWLINE variable'
+
+def p_variables_single(t):
+    'variables : variable'
+
+def p_variable(t):
+    'variable : VARIABLE COLON person'
+    binding.update({t[1] : t[3]})
 
 def p_class(t):
     'class : CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END'
@@ -130,10 +171,6 @@ def p_roster_two(t):
 
 # def p_department(t):
 #     'department : name NEWLINE chair: '
-
-
-
-
 
 
 def p_person(t):
@@ -164,8 +201,36 @@ def p_person_four(t):
 def p_person_five(t):
     'person : PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END'
     t[0] = person_class(t[5], t[7], t[3])
+
+def p_person_var(t):
+    'person : PERSON_TOKEN VARIABLE'
+    t[0] = person_class("", "", "", t[2], None)
     # t[0].print_myself()
-    # TODO add two more so year can be first but i'm too lazy to do that now
+
+def p_person_var_override(t):
+    'person : PERSON_TOKEN VARIABLE COLON NEWLINE overrides NEWLINE END'
+    t[0] = person_class("", "", "", t[2], t[5])
+    # t[0].print_myself()
+
+def p_override_year(t):
+    'override : year'
+    t[0] = ("Year", t[1])
+
+def p_override_role(t):
+    'override : role'
+    t[0] = ("Role", t[1])
+
+def p_override_name(t):
+    'override : name'
+    t[0] = ("Name", t[1])
+
+def p_override(t):
+    'overrides : override'
+    t[0] = [t[1]]
+
+def p_overrides(t):
+    'overrides : overrides NEWLINE override'
+    t[0] = t[1] + [t[3]]
 
 def p_role(t):
     'role : ROLE_TOKEN STRING'
@@ -193,7 +258,49 @@ def error_check():
         count += people.error_check()
     print("generated " + str(count) + " errors")
 
-s = """
+# s = """Class:
+#         Name: "software_design"
+#         Number: 257
+#         Section: 01
+#         Instructor:
+#             Person:
+#                 Name: "James_Ryan"
+#                 Role: "Professor"
+#                 Year: 0000
+#             END
+#         END
+#         Roster:
+#             Person: 
+#                 Name: "Aiden_Chang"
+#                 Role: "Student"
+#                 Year: 2023
+#             END
+#             Person:
+#                 Name: "Owen_Barnett"
+#                 Role: "Student"
+#                 Year: 2022
+#             END
+#             Person:
+#                 Name: "Bob"
+#                 Role: "Nothing"
+#                 Year: 298348
+#             END
+#         END
+#     END"""
+# %Aiden : Person: %Owen:
+#         Name: "Aiden"
+#         Year: 2023
+#     END
+
+s = """%Owen : Person:
+        Name: "Owen"
+        Role: "Student"
+        Year: 2022
+    END
+    %Aiden : Person: %Owen:
+        Name: "Aiden"
+        Year: 2023
+    END
     Class:
         Name: "software_design"
         Number: 257
@@ -206,26 +313,20 @@ s = """
             END
         END
         Roster:
-            Person: 
-                Name: "Aiden_Chang"
-                Role: "Student"
-                Year: 2023
+            Person: %Aiden: 
+                Name: "Mary"
             END
-            Person:
-                Name: "Owen_Barnett"
-                Role: "Student"
-                Year: 2022
-            END
-            Person:
-                Name: "Bob"
-                Role: "Nothing"
-                Year: 298348
+            Person: %Aiden 
+            Person: %Owen
+            Person: %Owen:
+                Name: "bob"
             END
         END
     END
     """
 
 parser.parse(s)
+
 
 while(True):
     print("Please type a command, type h for more commands and x to exit: \n")

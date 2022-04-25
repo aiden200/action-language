@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CLASS_TOKEN END INSTRUCTER_TOKEN NAME_TOKEN NEWLINE NUMBER NUMBER_TOKEN PERSON_TOKEN ROLE_TOKEN ROSTER_TOKEN SECTION_TOKEN STRING YEAR_TOKENstatement : classclass : CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE ENDnumber : NUMBER_TOKEN NUMBERsection : SECTION_TOKEN NUMBERroster : personroster : roster NEWLINE personperson : PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE ENDrole : ROLE_TOKEN STRINGname : NAME_TOKEN STRINGyear : YEAR_TOKEN NUMBER'
+_lr_signature = 'CLASS_TOKEN DEPARTMENT_TOKEN END INSTRUCTER_TOKEN NAME_TOKEN NEWLINE NUMBER NUMBER_TOKEN PERSON_TOKEN ROLE_TOKEN ROSTER_TOKEN SECTION_TOKEN STRING YEAR_TOKENclass : CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE ENDnumber : NUMBER_TOKEN NUMBERsection : SECTION_TOKEN NUMBERroster : personroster : roster NEWLINE personperson : PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE ENDperson : PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE ENDperson : PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE ENDrole : ROLE_TOKEN STRINGname : NAME_TOKEN STRINGyear : YEAR_TOKEN NUMBER'
     
-_lr_action_items = {'CLASS_TOKEN':([0,],[3,]),'$end':([1,2,73,],[0,-1,-2,]),'NEWLINE':([3,5,8,9,12,13,16,17,19,20,23,24,25,26,33,34,35,36,37,38,39,40,41,49,50,51,52,53,54,55,56,64,65,66,67,68,69,70,71,],[4,7,-14,11,-3,15,-4,18,21,22,29,30,31,32,-13,-15,42,43,44,45,46,47,48,-5,57,58,59,60,61,62,63,-6,72,-7,-8,-9,-10,-11,-12,]),'NAME_TOKEN':([4,22,31,32,46,47,],[6,6,6,6,6,6,]),'STRING':([6,27,],[8,33,]),'NUMBER_TOKEN':([7,],[10,]),'NUMBER':([10,14,28,],[12,16,34,]),'SECTION_TOKEN':([11,],[14,]),'INSTRUCTER_TOKEN':([15,],[17,]),'PERSON_TOKEN':([18,42,57,],[20,20,20,]),'END':([21,57,58,59,60,61,62,63,72,],[23,65,66,67,68,69,70,71,73,]),'ROLE_TOKEN':([22,30,32,44,48,],[27,27,27,27,27,]),'YEAR_TOKEN':([22,30,31,43,45,],[28,28,28,28,28,]),'ROSTER_TOKEN':([29,],[35,]),}
+_lr_action_items = {'CLASS_TOKEN':([0,],[2,]),'$end':([1,72,],[0,-1,]),'NEWLINE':([2,4,7,8,11,12,15,16,18,19,22,23,24,25,32,33,34,35,36,37,38,39,40,48,49,50,51,52,53,54,55,63,64,65,66,67,68,69,70,],[3,6,-13,10,-2,14,-3,17,20,21,28,29,30,31,-12,-14,41,42,43,44,45,46,47,-4,56,57,58,59,60,61,62,-5,71,-6,-7,-8,-9,-10,-11,]),'NAME_TOKEN':([3,21,30,31,45,46,],[5,5,5,5,5,5,]),'STRING':([5,26,],[7,32,]),'NUMBER_TOKEN':([6,],[9,]),'NUMBER':([9,13,27,],[11,15,33,]),'SECTION_TOKEN':([10,],[13,]),'INSTRUCTER_TOKEN':([14,],[16,]),'PERSON_TOKEN':([17,41,56,],[19,19,19,]),'END':([20,56,57,58,59,60,61,62,71,],[22,64,65,66,67,68,69,70,72,]),'ROLE_TOKEN':([21,29,31,43,47,],[26,26,26,26,26,]),'YEAR_TOKEN':([21,29,30,42,44,],[27,27,27,27,27,]),'ROSTER_TOKEN':([28,],[34,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'class':([0,],[2,]),'name':([4,22,31,32,46,47,],[5,24,38,41,54,55,]),'number':([7,],[9,]),'section':([11,],[13,]),'person':([18,42,57,],[19,49,64,]),'role':([22,30,32,44,48,],[25,36,40,52,56,]),'year':([22,30,31,43,45,],[26,37,39,51,53,]),'roster':([42,],[50,]),}
+_lr_goto_items = {'class':([0,],[1,]),'name':([3,21,30,31,45,46,],[4,23,37,40,53,54,]),'number':([6,],[8,]),'section':([10,],[12,]),'person':([17,41,56,],[18,48,63,]),'role':([21,29,31,43,47,],[24,35,39,51,55,]),'year':([21,29,30,42,44,],[25,36,38,50,52,]),'roster':([41,],[49,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,20 +26,19 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statement","S'",1,None,None,None),
-  ('statement -> class','statement',1,'p_statement_assign','parser.py',76),
+  ("S' -> class","S'",1,None,None,None),
   ('class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END','class',21,'p_class','parser.py',79),
   ('number -> NUMBER_TOKEN NUMBER','number',2,'p_number','parser.py',87),
   ('section -> SECTION_TOKEN NUMBER','section',2,'p_section','parser.py',91),
   ('roster -> person','roster',1,'p_roster_one','parser.py',95),
   ('roster -> roster NEWLINE person','roster',3,'p_roster_two','parser.py',99),
-  ('person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END','person',9,'p_person','parser.py',106),
-  ('person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END','person',9,'p_person_one','parser.py',111),
-  ('person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END','person',9,'p_person_two','parser.py',116),
-  ('person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END','person',9,'p_person_three','parser.py',121),
-  ('person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END','person',9,'p_person_four','parser.py',126),
-  ('person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END','person',9,'p_person_five','parser.py',131),
-  ('role -> ROLE_TOKEN STRING','role',2,'p_role','parser.py',137),
-  ('name -> NAME_TOKEN STRING','name',2,'p_name','parser.py',141),
-  ('year -> YEAR_TOKEN NUMBER','year',2,'p_year','parser.py',145),
+  ('person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END','person',9,'p_person','parser.py',111),
+  ('person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END','person',9,'p_person_one','parser.py',116),
+  ('person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END','person',9,'p_person_two','parser.py',121),
+  ('person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END','person',9,'p_person_three','parser.py',126),
+  ('person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END','person',9,'p_person_four','parser.py',131),
+  ('person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END','person',9,'p_person_five','parser.py',136),
+  ('role -> ROLE_TOKEN STRING','role',2,'p_role','parser.py',142),
+  ('name -> NAME_TOKEN STRING','name',2,'p_name','parser.py',146),
+  ('year -> YEAR_TOKEN NUMBER','year',2,'p_year','parser.py',150),
 ]

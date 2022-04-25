@@ -1,12 +1,14 @@
 import ply.lex as lex
 import ply.yacc as yacc
+import json
+
 
 
 
 
 tokens = (
-    'STRING', 'PERSON_TOKEN', 'NAME_TOKEN', "ROLE_TOKEN", "YEAR_TOKEN", "NEWLINE", "END", "NUMBER", "SECTION_TOKEN", 
-    "NUMBER_TOKEN", "INSTRUCTER_TOKEN", "ROSTER_TOKEN", "CLASS_TOKEN, "DEPARTMENT_TOKEN"
+    'STRING', 'PERSON_TOKEN', 'NAME_TOKEN', "ROLE_TOKEN", "NEWLINE", "END", "NUMBER", "SECTION_TOKEN", 
+    "NUMBER_TOKEN", "INSTRUCTER_TOKEN", "ROSTER_TOKEN", "CLASS_TOKEN", "DEPARTMENT_TOKEN", "YEAR_TOKEN"
 )
 
 t_STRING    = r'\"[a-zA-Z0-9_]*\"'
@@ -43,8 +45,18 @@ class person_class:
         self.role = role
         self.year = year
 
+    def error_check(self):
+        if self.name == None or self.role == None or self.year == None:
+            print("Error: Missing init values for class person")
+            return 1
+        return 0
+        
+        
     def print_myself(self, depth):
-        print('\t'*depth + "Person: name - " + self.name + ", role - " + self.role + ", year - " + self.year)
+        return {"Person":{"name" : self.name, "role" : self.role, "year" : self.year}}
+        # print('\t'*depth + "Person: name - " + self.name + ", role - " + self.role + ", year - " + self.year)
+        
+
 
 class class_class:
     def __init__(self, name, number, section, instructer, roster):
@@ -54,27 +66,43 @@ class class_class:
         self.instructer = instructer
         self.roster = roster
 
+    def error_check(self):
+        if self.name == None or self.number == None or self.section == None or self.instructer == None or self.roster == None:
+            print("Error: Missing init values for class person")
+            return 1
+        if self.instructer.role != "Professor" and self.instructer.role != "professor":
+            print("Error: Incorrect instructor role for class " + self.name)
+            return 1
+        for student in self.roster:
+            if student.role != "student" and student.role != "Student":
+                print("Error: Incorrect student role for " + student.name + " for class " + self.name)
+                return 1
+        #check numbers and sections I forgot what were the ranges
 
     def print_myself(self, depth):
-        
-        print('\t'*depth + "Class: name - " + self.name + ", number - " + self.number + ", section - " + self.section, end = "\n" + '\t'*(depth) + "instructer: \n")
-        self.instructer.print_myself(depth + 1)
-        print('\t'*depth + "roster: ")
+        roster_dic = {}
         for student in self.roster:
-            print('\t'*(depth), end= "")
-            student.print_myself(depth)
-
+            roster_dic["student"] = student.print_myself(depth)
+        return {"Class":{"name" : self.name, "number" : self.number, "section" : self.section, "Instructer" : self.instructer.print_myself(depth + 1)}, "roster": roster_dic}
+        # print('\t'*depth + "Class: name - " + self.name + ", number - " + self.number + ", section - " + self.section, end = "\n" + '\t'*(depth) + "instructer: \n")
+        # self.instructer.print_myself(depth + 1)
+        # print('\t'*depth + "roster: ")
+        # for student in self.roster:
+        #     print('\t'*(depth), end= "")
+        #     student.print_myself(depth)
+       
 class department_class:
     def init(self, name, chair, classes):
         self.name = name
         self.chair = chair
         self.classes = classes
     
-    def print_myself(self, depth):
-        print('\t'*depth + "Department:\nname - " + self.name + ",")
+    # def print_myself(self, depth):
+    #     return ('\t'*depth + "Department:\nname - " + self.name + ",")
 
-def p_statement_assign(t):
-    'statement : class'
+# def p_statement_assign(t):
+#     'statement : class'
+
 
 def p_class(t):
     'class : CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END'
@@ -157,8 +185,16 @@ def p_error(t):
 
 parser = yacc.yacc()
 
+def error_check():
+    count = 0
+    for classes in class_list:
+        count += classes.error_check()
+    for people in people_list:
+        count += people.error_check()
+    print("generated " + str(count) + " errors")
 
-s = """Class:
+s = """
+    Class:
         Name: "software_design"
         Number: 257
         Section: 01
@@ -186,7 +222,8 @@ s = """Class:
                 Year: 298348
             END
         END
-    END"""
+    END
+    """
 
 parser.parse(s)
 
@@ -201,13 +238,16 @@ while(True):
         elif x == 'h':
             print('To exit: x\nFor more commands: h\nTo print out the entire parsed list in a string: all\n')
         elif x == 'all':
-            print("Classes:")
+            s = ""
+            error_check()
             for classes in class_list:
                 # print('\t', end =" ")
-                classes.print_myself(1)
+                # s = s + classes.print_myself(1)
+                print(json.dumps(classes.print_myself(1)))
             for people in people_list:
                 # print('\t', end =" ")
-                people.print_myself(0)
+                # people.print_myself(0)
+                print(json.dumps(people.print_myself(0)))
                 
      
 

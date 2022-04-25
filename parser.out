@@ -1,656 +1,650 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    DEPARTMENT_TOKEN
+
 Grammar
 
-Rule 0     S' -> statement
-Rule 1     statement -> class
-Rule 2     class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
-Rule 3     number -> NUMBER_TOKEN NUMBER
-Rule 4     section -> SECTION_TOKEN NUMBER
-Rule 5     roster -> person
-Rule 6     roster -> roster NEWLINE person
-Rule 7     person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
-Rule 8     person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
-Rule 9     person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
-Rule 10    person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
-Rule 11    person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
-Rule 12    person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
-Rule 13    role -> ROLE_TOKEN STRING
-Rule 14    name -> NAME_TOKEN STRING
-Rule 15    year -> YEAR_TOKEN NUMBER
+Rule 0     S' -> class
+Rule 1     class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+Rule 2     number -> NUMBER_TOKEN NUMBER
+Rule 3     section -> SECTION_TOKEN NUMBER
+Rule 4     roster -> person
+Rule 5     roster -> roster NEWLINE person
+Rule 6     person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
+Rule 7     person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
+Rule 8     person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
+Rule 9     person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
+Rule 10    person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
+Rule 11    person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
+Rule 12    role -> ROLE_TOKEN STRING
+Rule 13    name -> NAME_TOKEN STRING
+Rule 14    year -> YEAR_TOKEN NUMBER
 
 Terminals, with rules where they appear
 
-CLASS_TOKEN          : 2
-END                  : 2 2 2 7 8 9 10 11 12
-INSTRUCTER_TOKEN     : 2
-NAME_TOKEN           : 14
-NEWLINE              : 2 2 2 2 2 2 2 2 2 2 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12 12 12
-NUMBER               : 3 4 15
-NUMBER_TOKEN         : 3
-PERSON_TOKEN         : 7 8 9 10 11 12
-ROLE_TOKEN           : 13
-ROSTER_TOKEN         : 2
-SECTION_TOKEN        : 4
-STRING               : 13 14
-YEAR_TOKEN           : 15
+CLASS_TOKEN          : 1
+DEPARTMENT_TOKEN     : 
+END                  : 1 1 1 6 7 8 9 10 11
+INSTRUCTER_TOKEN     : 1
+NAME_TOKEN           : 13
+NEWLINE              : 1 1 1 1 1 1 1 1 1 1 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11
+NUMBER               : 2 3 14
+NUMBER_TOKEN         : 2
+PERSON_TOKEN         : 6 7 8 9 10 11
+ROLE_TOKEN           : 12
+ROSTER_TOKEN         : 1
+SECTION_TOKEN        : 3
+STRING               : 12 13
+YEAR_TOKEN           : 14
 error                : 
 
 Nonterminals, with rules where they appear
 
-class                : 1
-name                 : 2 7 8 9 10 11 12
-number               : 2
-person               : 2 5 6
-role                 : 7 8 9 10 11 12
-roster               : 2 6
-section              : 2
-statement            : 0
-year                 : 7 8 9 10 11 12
+class                : 0
+name                 : 1 6 7 8 9 10 11
+number               : 1
+person               : 1 4 5
+role                 : 6 7 8 9 10 11
+roster               : 1 5
+section              : 1
+year                 : 6 7 8 9 10 11
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . statement
-    (1) statement -> . class
-    (2) class -> . CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (0) S' -> . class
+    (1) class -> . CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    CLASS_TOKEN     shift and go to state 3
+    CLASS_TOKEN     shift and go to state 2
 
-    statement                      shift and go to state 1
-    class                          shift and go to state 2
+    class                          shift and go to state 1
 
 state 1
 
-    (0) S' -> statement .
+    (0) S' -> class .
 
 
 
 state 2
 
-    (1) statement -> class .
+    (1) class -> CLASS_TOKEN . NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    $end            reduce using rule 1 (statement -> class .)
+    NEWLINE         shift and go to state 3
 
 
 state 3
 
-    (2) class -> CLASS_TOKEN . NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (1) class -> CLASS_TOKEN NEWLINE . name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (13) name -> . NAME_TOKEN STRING
 
-    NEWLINE         shift and go to state 4
+    NAME_TOKEN      shift and go to state 5
 
+    name                           shift and go to state 4
 
 state 4
 
-    (2) class -> CLASS_TOKEN NEWLINE . name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
-    (14) name -> . NAME_TOKEN STRING
+    (1) class -> CLASS_TOKEN NEWLINE name . NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NAME_TOKEN      shift and go to state 6
+    NEWLINE         shift and go to state 6
 
-    name                           shift and go to state 5
 
 state 5
 
-    (2) class -> CLASS_TOKEN NEWLINE name . NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (13) name -> NAME_TOKEN . STRING
 
-    NEWLINE         shift and go to state 7
+    STRING          shift and go to state 7
 
 
 state 6
 
-    (14) name -> NAME_TOKEN . STRING
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE . number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (2) number -> . NUMBER_TOKEN NUMBER
 
-    STRING          shift and go to state 8
+    NUMBER_TOKEN    shift and go to state 9
 
+    number                         shift and go to state 8
 
 state 7
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE . number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
-    (3) number -> . NUMBER_TOKEN NUMBER
+    (13) name -> NAME_TOKEN STRING .
 
-    NUMBER_TOKEN    shift and go to state 10
+    NEWLINE         reduce using rule 13 (name -> NAME_TOKEN STRING .)
 
-    number                         shift and go to state 9
 
 state 8
 
-    (14) name -> NAME_TOKEN STRING .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number . NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NEWLINE         reduce using rule 14 (name -> NAME_TOKEN STRING .)
+    NEWLINE         shift and go to state 10
 
 
 state 9
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number . NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (2) number -> NUMBER_TOKEN . NUMBER
 
-    NEWLINE         shift and go to state 11
+    NUMBER          shift and go to state 11
 
 
 state 10
 
-    (3) number -> NUMBER_TOKEN . NUMBER
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE . section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (3) section -> . SECTION_TOKEN NUMBER
 
-    NUMBER          shift and go to state 12
+    SECTION_TOKEN   shift and go to state 13
 
+    section                        shift and go to state 12
 
 state 11
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE . section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
-    (4) section -> . SECTION_TOKEN NUMBER
+    (2) number -> NUMBER_TOKEN NUMBER .
 
-    SECTION_TOKEN   shift and go to state 14
+    NEWLINE         reduce using rule 2 (number -> NUMBER_TOKEN NUMBER .)
 
-    section                        shift and go to state 13
 
 state 12
 
-    (3) number -> NUMBER_TOKEN NUMBER .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section . NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NEWLINE         reduce using rule 3 (number -> NUMBER_TOKEN NUMBER .)
+    NEWLINE         shift and go to state 14
 
 
 state 13
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section . NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (3) section -> SECTION_TOKEN . NUMBER
 
-    NEWLINE         shift and go to state 15
+    NUMBER          shift and go to state 15
 
 
 state 14
 
-    (4) section -> SECTION_TOKEN . NUMBER
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE . INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NUMBER          shift and go to state 16
+    INSTRUCTER_TOKEN shift and go to state 16
 
 
 state 15
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE . INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (3) section -> SECTION_TOKEN NUMBER .
 
-    INSTRUCTER_TOKEN shift and go to state 17
+    NEWLINE         reduce using rule 3 (section -> SECTION_TOKEN NUMBER .)
 
 
 state 16
 
-    (4) section -> SECTION_TOKEN NUMBER .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN . NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NEWLINE         reduce using rule 4 (section -> SECTION_TOKEN NUMBER .)
+    NEWLINE         shift and go to state 17
 
 
 state 17
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN . NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE . person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (6) person -> . PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
+    (7) person -> . PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
+    (8) person -> . PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
+    (9) person -> . PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
+    (10) person -> . PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
+    (11) person -> . PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
 
-    NEWLINE         shift and go to state 18
+    PERSON_TOKEN    shift and go to state 19
 
+    person                         shift and go to state 18
 
 state 18
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE . person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
-    (7) person -> . PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
-    (8) person -> . PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
-    (9) person -> . PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
-    (10) person -> . PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
-    (11) person -> . PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
-    (12) person -> . PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person . NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    PERSON_TOKEN    shift and go to state 20
+    NEWLINE         shift and go to state 20
 
-    person                         shift and go to state 19
 
 state 19
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person . NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (6) person -> PERSON_TOKEN . NEWLINE name NEWLINE role NEWLINE year NEWLINE END
+    (7) person -> PERSON_TOKEN . NEWLINE name NEWLINE year NEWLINE role NEWLINE END
+    (8) person -> PERSON_TOKEN . NEWLINE role NEWLINE name NEWLINE year NEWLINE END
+    (9) person -> PERSON_TOKEN . NEWLINE role NEWLINE year NEWLINE name NEWLINE END
+    (10) person -> PERSON_TOKEN . NEWLINE year NEWLINE role NEWLINE name NEWLINE END
+    (11) person -> PERSON_TOKEN . NEWLINE year NEWLINE name NEWLINE role NEWLINE END
 
     NEWLINE         shift and go to state 21
 
 
 state 20
 
-    (7) person -> PERSON_TOKEN . NEWLINE name NEWLINE role NEWLINE year NEWLINE END
-    (8) person -> PERSON_TOKEN . NEWLINE name NEWLINE year NEWLINE role NEWLINE END
-    (9) person -> PERSON_TOKEN . NEWLINE role NEWLINE name NEWLINE year NEWLINE END
-    (10) person -> PERSON_TOKEN . NEWLINE role NEWLINE year NEWLINE name NEWLINE END
-    (11) person -> PERSON_TOKEN . NEWLINE year NEWLINE role NEWLINE name NEWLINE END
-    (12) person -> PERSON_TOKEN . NEWLINE year NEWLINE name NEWLINE role NEWLINE END
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE . END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NEWLINE         shift and go to state 22
+    END             shift and go to state 22
 
 
 state 21
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE . END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE . name NEWLINE role NEWLINE year NEWLINE END
+    (7) person -> PERSON_TOKEN NEWLINE . name NEWLINE year NEWLINE role NEWLINE END
+    (8) person -> PERSON_TOKEN NEWLINE . role NEWLINE name NEWLINE year NEWLINE END
+    (9) person -> PERSON_TOKEN NEWLINE . role NEWLINE year NEWLINE name NEWLINE END
+    (10) person -> PERSON_TOKEN NEWLINE . year NEWLINE role NEWLINE name NEWLINE END
+    (11) person -> PERSON_TOKEN NEWLINE . year NEWLINE name NEWLINE role NEWLINE END
+    (13) name -> . NAME_TOKEN STRING
+    (12) role -> . ROLE_TOKEN STRING
+    (14) year -> . YEAR_TOKEN NUMBER
 
-    END             shift and go to state 23
+    NAME_TOKEN      shift and go to state 5
+    ROLE_TOKEN      shift and go to state 26
+    YEAR_TOKEN      shift and go to state 27
 
+    name                           shift and go to state 23
+    role                           shift and go to state 24
+    year                           shift and go to state 25
 
 state 22
 
-    (7) person -> PERSON_TOKEN NEWLINE . name NEWLINE role NEWLINE year NEWLINE END
-    (8) person -> PERSON_TOKEN NEWLINE . name NEWLINE year NEWLINE role NEWLINE END
-    (9) person -> PERSON_TOKEN NEWLINE . role NEWLINE name NEWLINE year NEWLINE END
-    (10) person -> PERSON_TOKEN NEWLINE . role NEWLINE year NEWLINE name NEWLINE END
-    (11) person -> PERSON_TOKEN NEWLINE . year NEWLINE role NEWLINE name NEWLINE END
-    (12) person -> PERSON_TOKEN NEWLINE . year NEWLINE name NEWLINE role NEWLINE END
-    (14) name -> . NAME_TOKEN STRING
-    (13) role -> . ROLE_TOKEN STRING
-    (15) year -> . YEAR_TOKEN NUMBER
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END . NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NAME_TOKEN      shift and go to state 6
-    ROLE_TOKEN      shift and go to state 27
-    YEAR_TOKEN      shift and go to state 28
+    NEWLINE         shift and go to state 28
 
-    name                           shift and go to state 24
-    role                           shift and go to state 25
-    year                           shift and go to state 26
 
 state 23
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END . NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE name . NEWLINE role NEWLINE year NEWLINE END
+    (7) person -> PERSON_TOKEN NEWLINE name . NEWLINE year NEWLINE role NEWLINE END
 
     NEWLINE         shift and go to state 29
 
 
 state 24
 
-    (7) person -> PERSON_TOKEN NEWLINE name . NEWLINE role NEWLINE year NEWLINE END
-    (8) person -> PERSON_TOKEN NEWLINE name . NEWLINE year NEWLINE role NEWLINE END
+    (8) person -> PERSON_TOKEN NEWLINE role . NEWLINE name NEWLINE year NEWLINE END
+    (9) person -> PERSON_TOKEN NEWLINE role . NEWLINE year NEWLINE name NEWLINE END
 
     NEWLINE         shift and go to state 30
 
 
 state 25
 
-    (9) person -> PERSON_TOKEN NEWLINE role . NEWLINE name NEWLINE year NEWLINE END
-    (10) person -> PERSON_TOKEN NEWLINE role . NEWLINE year NEWLINE name NEWLINE END
+    (10) person -> PERSON_TOKEN NEWLINE year . NEWLINE role NEWLINE name NEWLINE END
+    (11) person -> PERSON_TOKEN NEWLINE year . NEWLINE name NEWLINE role NEWLINE END
 
     NEWLINE         shift and go to state 31
 
 
 state 26
 
-    (11) person -> PERSON_TOKEN NEWLINE year . NEWLINE role NEWLINE name NEWLINE END
-    (12) person -> PERSON_TOKEN NEWLINE year . NEWLINE name NEWLINE role NEWLINE END
+    (12) role -> ROLE_TOKEN . STRING
 
-    NEWLINE         shift and go to state 32
+    STRING          shift and go to state 32
 
 
 state 27
 
-    (13) role -> ROLE_TOKEN . STRING
+    (14) year -> YEAR_TOKEN . NUMBER
 
-    STRING          shift and go to state 33
+    NUMBER          shift and go to state 33
 
 
 state 28
 
-    (15) year -> YEAR_TOKEN . NUMBER
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE . ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
 
-    NUMBER          shift and go to state 34
+    ROSTER_TOKEN    shift and go to state 34
 
 
 state 29
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE . ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE name NEWLINE . role NEWLINE year NEWLINE END
+    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE . year NEWLINE role NEWLINE END
+    (12) role -> . ROLE_TOKEN STRING
+    (14) year -> . YEAR_TOKEN NUMBER
 
-    ROSTER_TOKEN    shift and go to state 35
+    ROLE_TOKEN      shift and go to state 26
+    YEAR_TOKEN      shift and go to state 27
 
+    role                           shift and go to state 35
+    year                           shift and go to state 36
 
 state 30
 
-    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE . role NEWLINE year NEWLINE END
-    (8) person -> PERSON_TOKEN NEWLINE name NEWLINE . year NEWLINE role NEWLINE END
-    (13) role -> . ROLE_TOKEN STRING
-    (15) year -> . YEAR_TOKEN NUMBER
+    (8) person -> PERSON_TOKEN NEWLINE role NEWLINE . name NEWLINE year NEWLINE END
+    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE . year NEWLINE name NEWLINE END
+    (13) name -> . NAME_TOKEN STRING
+    (14) year -> . YEAR_TOKEN NUMBER
 
-    ROLE_TOKEN      shift and go to state 27
-    YEAR_TOKEN      shift and go to state 28
+    NAME_TOKEN      shift and go to state 5
+    YEAR_TOKEN      shift and go to state 27
 
-    role                           shift and go to state 36
-    year                           shift and go to state 37
+    name                           shift and go to state 37
+    year                           shift and go to state 38
 
 state 31
 
-    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE . name NEWLINE year NEWLINE END
-    (10) person -> PERSON_TOKEN NEWLINE role NEWLINE . year NEWLINE name NEWLINE END
-    (14) name -> . NAME_TOKEN STRING
-    (15) year -> . YEAR_TOKEN NUMBER
+    (10) person -> PERSON_TOKEN NEWLINE year NEWLINE . role NEWLINE name NEWLINE END
+    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE . name NEWLINE role NEWLINE END
+    (12) role -> . ROLE_TOKEN STRING
+    (13) name -> . NAME_TOKEN STRING
 
-    NAME_TOKEN      shift and go to state 6
-    YEAR_TOKEN      shift and go to state 28
+    ROLE_TOKEN      shift and go to state 26
+    NAME_TOKEN      shift and go to state 5
 
-    name                           shift and go to state 38
-    year                           shift and go to state 39
+    role                           shift and go to state 39
+    name                           shift and go to state 40
 
 state 32
 
-    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE . role NEWLINE name NEWLINE END
-    (12) person -> PERSON_TOKEN NEWLINE year NEWLINE . name NEWLINE role NEWLINE END
-    (13) role -> . ROLE_TOKEN STRING
-    (14) name -> . NAME_TOKEN STRING
+    (12) role -> ROLE_TOKEN STRING .
 
-    ROLE_TOKEN      shift and go to state 27
-    NAME_TOKEN      shift and go to state 6
+    NEWLINE         reduce using rule 12 (role -> ROLE_TOKEN STRING .)
 
-    role                           shift and go to state 40
-    name                           shift and go to state 41
 
 state 33
 
-    (13) role -> ROLE_TOKEN STRING .
+    (14) year -> YEAR_TOKEN NUMBER .
 
-    NEWLINE         reduce using rule 13 (role -> ROLE_TOKEN STRING .)
+    NEWLINE         reduce using rule 14 (year -> YEAR_TOKEN NUMBER .)
 
 
 state 34
 
-    (15) year -> YEAR_TOKEN NUMBER .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN . NEWLINE roster NEWLINE END NEWLINE END
 
-    NEWLINE         reduce using rule 15 (year -> YEAR_TOKEN NUMBER .)
+    NEWLINE         shift and go to state 41
 
 
 state 35
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN . NEWLINE roster NEWLINE END NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE name NEWLINE role . NEWLINE year NEWLINE END
 
     NEWLINE         shift and go to state 42
 
 
 state 36
 
-    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE role . NEWLINE year NEWLINE END
+    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE year . NEWLINE role NEWLINE END
 
     NEWLINE         shift and go to state 43
 
 
 state 37
 
-    (8) person -> PERSON_TOKEN NEWLINE name NEWLINE year . NEWLINE role NEWLINE END
+    (8) person -> PERSON_TOKEN NEWLINE role NEWLINE name . NEWLINE year NEWLINE END
 
     NEWLINE         shift and go to state 44
 
 
 state 38
 
-    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE name . NEWLINE year NEWLINE END
+    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE year . NEWLINE name NEWLINE END
 
     NEWLINE         shift and go to state 45
 
 
 state 39
 
-    (10) person -> PERSON_TOKEN NEWLINE role NEWLINE year . NEWLINE name NEWLINE END
+    (10) person -> PERSON_TOKEN NEWLINE year NEWLINE role . NEWLINE name NEWLINE END
 
     NEWLINE         shift and go to state 46
 
 
 state 40
 
-    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE role . NEWLINE name NEWLINE END
+    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE name . NEWLINE role NEWLINE END
 
     NEWLINE         shift and go to state 47
 
 
 state 41
 
-    (12) person -> PERSON_TOKEN NEWLINE year NEWLINE name . NEWLINE role NEWLINE END
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE . roster NEWLINE END NEWLINE END
+    (4) roster -> . person
+    (5) roster -> . roster NEWLINE person
+    (6) person -> . PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
+    (7) person -> . PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
+    (8) person -> . PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
+    (9) person -> . PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
+    (10) person -> . PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
+    (11) person -> . PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
 
-    NEWLINE         shift and go to state 48
+    PERSON_TOKEN    shift and go to state 19
 
+    person                         shift and go to state 48
+    roster                         shift and go to state 49
 
 state 42
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE . roster NEWLINE END NEWLINE END
-    (5) roster -> . person
-    (6) roster -> . roster NEWLINE person
-    (7) person -> . PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
-    (8) person -> . PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
-    (9) person -> . PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
-    (10) person -> . PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
-    (11) person -> . PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
-    (12) person -> . PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE . year NEWLINE END
+    (14) year -> . YEAR_TOKEN NUMBER
 
-    PERSON_TOKEN    shift and go to state 20
+    YEAR_TOKEN      shift and go to state 27
 
-    person                         shift and go to state 49
-    roster                         shift and go to state 50
+    year                           shift and go to state 50
 
 state 43
 
-    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE . year NEWLINE END
-    (15) year -> . YEAR_TOKEN NUMBER
+    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE . role NEWLINE END
+    (12) role -> . ROLE_TOKEN STRING
 
-    YEAR_TOKEN      shift and go to state 28
+    ROLE_TOKEN      shift and go to state 26
 
-    year                           shift and go to state 51
+    role                           shift and go to state 51
 
 state 44
 
-    (8) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE . role NEWLINE END
-    (13) role -> . ROLE_TOKEN STRING
+    (8) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE . year NEWLINE END
+    (14) year -> . YEAR_TOKEN NUMBER
 
-    ROLE_TOKEN      shift and go to state 27
+    YEAR_TOKEN      shift and go to state 27
 
-    role                           shift and go to state 52
+    year                           shift and go to state 52
 
 state 45
 
-    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE . year NEWLINE END
-    (15) year -> . YEAR_TOKEN NUMBER
+    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE . name NEWLINE END
+    (13) name -> . NAME_TOKEN STRING
 
-    YEAR_TOKEN      shift and go to state 28
+    NAME_TOKEN      shift and go to state 5
 
-    year                           shift and go to state 53
+    name                           shift and go to state 53
 
 state 46
 
-    (10) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE . name NEWLINE END
-    (14) name -> . NAME_TOKEN STRING
+    (10) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE . name NEWLINE END
+    (13) name -> . NAME_TOKEN STRING
 
-    NAME_TOKEN      shift and go to state 6
+    NAME_TOKEN      shift and go to state 5
 
     name                           shift and go to state 54
 
 state 47
 
-    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE . name NEWLINE END
-    (14) name -> . NAME_TOKEN STRING
+    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE . role NEWLINE END
+    (12) role -> . ROLE_TOKEN STRING
 
-    NAME_TOKEN      shift and go to state 6
+    ROLE_TOKEN      shift and go to state 26
 
-    name                           shift and go to state 55
+    role                           shift and go to state 55
 
 state 48
 
-    (12) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE . role NEWLINE END
-    (13) role -> . ROLE_TOKEN STRING
+    (4) roster -> person .
 
-    ROLE_TOKEN      shift and go to state 27
+    NEWLINE         reduce using rule 4 (roster -> person .)
 
-    role                           shift and go to state 56
 
 state 49
 
-    (5) roster -> person .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster . NEWLINE END NEWLINE END
+    (5) roster -> roster . NEWLINE person
 
-    NEWLINE         reduce using rule 5 (roster -> person .)
+    NEWLINE         shift and go to state 56
 
 
 state 50
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster . NEWLINE END NEWLINE END
-    (6) roster -> roster . NEWLINE person
+    (6) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year . NEWLINE END
 
     NEWLINE         shift and go to state 57
 
 
 state 51
 
-    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year . NEWLINE END
+    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role . NEWLINE END
 
     NEWLINE         shift and go to state 58
 
 
 state 52
 
-    (8) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role . NEWLINE END
+    (8) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year . NEWLINE END
 
     NEWLINE         shift and go to state 59
 
 
 state 53
 
-    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year . NEWLINE END
+    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name . NEWLINE END
 
     NEWLINE         shift and go to state 60
 
 
 state 54
 
-    (10) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name . NEWLINE END
+    (10) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name . NEWLINE END
 
     NEWLINE         shift and go to state 61
 
 
 state 55
 
-    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name . NEWLINE END
+    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role . NEWLINE END
 
     NEWLINE         shift and go to state 62
 
 
 state 56
 
-    (12) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role . NEWLINE END
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE . END NEWLINE END
+    (5) roster -> roster NEWLINE . person
+    (6) person -> . PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
+    (7) person -> . PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
+    (8) person -> . PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
+    (9) person -> . PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
+    (10) person -> . PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
+    (11) person -> . PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
 
-    NEWLINE         shift and go to state 63
+    END             shift and go to state 64
+    PERSON_TOKEN    shift and go to state 19
 
+    person                         shift and go to state 63
 
 state 57
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE . END NEWLINE END
-    (6) roster -> roster NEWLINE . person
-    (7) person -> . PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END
-    (8) person -> . PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END
-    (9) person -> . PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END
-    (10) person -> . PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END
-    (11) person -> . PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END
-    (12) person -> . PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE . END
 
     END             shift and go to state 65
-    PERSON_TOKEN    shift and go to state 20
 
-    person                         shift and go to state 64
 
 state 58
 
-    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE . END
+    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE . END
 
     END             shift and go to state 66
 
 
 state 59
 
-    (8) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE . END
+    (8) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE . END
 
     END             shift and go to state 67
 
 
 state 60
 
-    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE . END
+    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE . END
 
     END             shift and go to state 68
 
 
 state 61
 
-    (10) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE . END
+    (10) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE . END
 
     END             shift and go to state 69
 
 
 state 62
 
-    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE . END
+    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE . END
 
     END             shift and go to state 70
 
 
 state 63
 
-    (12) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE . END
+    (5) roster -> roster NEWLINE person .
 
-    END             shift and go to state 71
+    NEWLINE         reduce using rule 5 (roster -> roster NEWLINE person .)
 
 
 state 64
 
-    (6) roster -> roster NEWLINE person .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END . NEWLINE END
 
-    NEWLINE         reduce using rule 6 (roster -> roster NEWLINE person .)
+    NEWLINE         shift and go to state 71
 
 
 state 65
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END . NEWLINE END
+    (6) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END .
 
-    NEWLINE         shift and go to state 72
+    NEWLINE         reduce using rule 6 (person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END .)
 
 
 state 66
 
-    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END .
+    (7) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END .
 
-    NEWLINE         reduce using rule 7 (person -> PERSON_TOKEN NEWLINE name NEWLINE role NEWLINE year NEWLINE END .)
+    NEWLINE         reduce using rule 7 (person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END .)
 
 
 state 67
 
-    (8) person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END .
+    (8) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END .
 
-    NEWLINE         reduce using rule 8 (person -> PERSON_TOKEN NEWLINE name NEWLINE year NEWLINE role NEWLINE END .)
+    NEWLINE         reduce using rule 8 (person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END .)
 
 
 state 68
 
-    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END .
+    (9) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END .
 
-    NEWLINE         reduce using rule 9 (person -> PERSON_TOKEN NEWLINE role NEWLINE name NEWLINE year NEWLINE END .)
+    NEWLINE         reduce using rule 9 (person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END .)
 
 
 state 69
 
-    (10) person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END .
+    (10) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END .
 
-    NEWLINE         reduce using rule 10 (person -> PERSON_TOKEN NEWLINE role NEWLINE year NEWLINE name NEWLINE END .)
+    NEWLINE         reduce using rule 10 (person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END .)
 
 
 state 70
 
-    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END .
+    (11) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END .
 
-    NEWLINE         reduce using rule 11 (person -> PERSON_TOKEN NEWLINE year NEWLINE role NEWLINE name NEWLINE END .)
+    NEWLINE         reduce using rule 11 (person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END .)
 
 
 state 71
 
-    (12) person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END .
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE . END
 
-    NEWLINE         reduce using rule 12 (person -> PERSON_TOKEN NEWLINE year NEWLINE name NEWLINE role NEWLINE END .)
+    END             shift and go to state 72
 
 
 state 72
 
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE . END
+    (1) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END .
 
-    END             shift and go to state 73
-
-
-state 73
-
-    (2) class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END .
-
-    $end            reduce using rule 2 (class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END .)
+    $end            reduce using rule 1 (class -> CLASS_TOKEN NEWLINE name NEWLINE number NEWLINE section NEWLINE INSTRUCTER_TOKEN NEWLINE person NEWLINE END NEWLINE ROSTER_TOKEN NEWLINE roster NEWLINE END NEWLINE END .)
 

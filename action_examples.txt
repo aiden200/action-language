@@ -1,0 +1,198 @@
+action make-fun-of:
+    gloss: "{$insulter.name} makes fun of {$insultee.name}"
+    roles:
+        $insulter initiator 
+        $insultee recipient
+        0-9999 $observer bystander [0.5]
+    preconditions:
+        {$insulter.personality.cruelty > 10}
+    effects:
+        # Insultee processes the event
+        {$insultee.update_charge($insulter, -5)}
+        {$insultee.update_spark($insulter, -5)}
+        {$insultee.associate($this, "embarrassment,mistreatment")}
+        queue contemplate-serial-mistreatment:
+            bindings:
+                mistreated: $insultee
+                mistreater: $insulter
+                loop {$insultee.memories(tag='mistreatment', filter=lambda m: m.initiator is $insulter), n=3} as $past-action:
+                    past-action: $past-action
+            priority: 1
+            expires: 1000
+        # If you're cruel, you like insulter more, else less
+        loop {$this.all} as $x:
+            if {$x not in $this.nucleus or $x.personality.cruelty < 10}:
+                {$x.update_charge($insulter, -3)}
+            if {$x not in $this.nucleus and $x.personality.cruelty >= 10}:
+                {$x.update_charge($insulter, 3)}
+    salience:
+        $insultee: 750
+        $insulter: 200
+        loop {$this.all} as $x:
+            if {$x not in $this.nucleus}:
+                if {$x.salience($insultee) >= 1.5}:
+                    500
+                else:
+                    100
+action ridicule from make-fun-of:
+    gloss: {f"{$insulter.name} ridicules {$insultee.name}"}
+    preconditions:
+        {$insulter.personality.cruelty > 25}
+    salience:
+        $insultee: 850
+        $insulter: 200
+        loop {$this.all} as $x:
+            if {$x not in $this.nucleus}:
+                if {$x.salience($insultee) >= 1.5}:
+                    600
+                else:
+                    150
+special action decide-to-go-to:
+    gloss: "{traveler.name} decides to go to {destination.name}"
+    roles:
+        $traveler initiator
+        $destination location subject
+        $occasion symbol
+    effects:
+        if {not $traveler.is_at($destination)}:
+            urgent queue depart:
+                bindings:
+                    traveler: $traveler
+                    location: $location
+                priority: 1002
+                abandon: {$traveler.is_at($destination)}
+            urgent queue arrive-at:
+                bindings:
+                    traveler: $traveler
+                    location: $location
+                priority: 1001
+                abandon: {$traveler.is_at($destination)}
+    salience:
+        loop {$this.all} as $x: 300
+action exchange-pleasantries:
+    gloss: "{$initiator.name} and {$recipient.name} exchanged pleasantries"
+    roles:
+        $initiator initiator
+        $recipient recipient
+        0-9999 $observer [0.1]
+    preconditions:
+        {$initiator.age > 14}
+        {$initiator.personality.friendliness > -20}
+        {$recipient in $initiator.acquaintances}
+        {$recipient.personality.friendliness > -20}
+    effects:
+        {$initiator.update_charge($recipient, 2)}
+        {$recipient.update_spark($initiator, "a")}
+    saliences:
+        $initiator: 100
+        $recipient: 100
+        loop {$this.secondary} as $x: 20
+special action plan-arson:
+    gloss: "{$avenger} plans to burn down {$scene.name} as vengeance against {$victim.name}"
+    roles:
+        $avenger initiator
+        $victim absent subject
+        $scene location subject
+    effects:
+        urgent queue ascertain-no-witnesses-to-arson ascertain-witnesses-to-arson fail-to-notice-witnesses-to-arson:
+            bindings:
+                arsonist: $avenger
+            priority: 100
+            expiration_code: {$this.id}
+            kill_code: {$this.id}
+            location=$scene
+            time_of_day={$this.time_of_day}
+        urgent queue ascertain-witnesses-to-arson:
+            bindings:
+                arsonist: $avenger
+            priority: 100
+            expiration_code: {$this.id}
+            kill_code: {$this.id}
+            location=$scene
+            time_of_day={$this.time_of_day}
+special action start-fight:
+    roles:
+        $instigator initiator
+        $opponent recipient
+        0-9999 $observer bystander
+    effects:
+        {$opponent.update_charge($instigator, -20)}
+        {$instigator.update_charge($opponent, -20)}
+        loop {$this.all} as $x:
+            {$x.associate($this, "crime")}
+        queue contemplate-serial-mistreatment:
+            bindings:
+                mistreated=$opponent
+                mistreater=$instigator
+                loop {$insultee.memories(tag='mistreatment', filter=lambda m: m.initiator is $insulter), n=3} as $past-action:
+                    past-action: $past-action
+            priority: 1
+            expires: 1000
+        if {$opponent.personality.violent > 10}:
+            urgent queue fight-back:
+                bindings:
+                    reciprocator: $opponent
+                    instigator: $instigator
+                priority: 100
+                expiration_code: {$this.id}
+                kill_code: {$this.id}
+                location: {$this.location}
+                time_of_day: {$this.time_of_day}
+                abandon: {not $instigator.is_at($opponent.location)}
+        if {$opponent.personality.bravery < -10}:
+            urgent queue flee-from-fight:
+                bindings:
+                    fleer: $opponent
+                    opponent: $instigator
+                priority: 100
+                expiration_code: {$this.id}
+                kill_code: {$this.id}
+                location: {$this.location}
+                time_of_day: {$this.time_of_day}
+                abandon: {not $instigator.is_at($opponent.location)}
+        if {$observer.personality.discord < -10 and $observer.personality.bravery > 0}:
+            urgent queue break-up-fight:
+            bindings:
+                mediator: $observer
+                instigator: $instigator
+                opponent: $opponent
+            priority: 100
+            expiration_code: {$this.id}
+            kill_code: {$this.id}
+            location: {$this.location}
+            time_of_day: {$this.time_of_day}
+            abandon: {not $instigator.is_at($opponent.location)}
+    saliences:
+        $instigator: 10000
+        $opponent: 10000
+        loop {$this.all} as $x: 2000
+special action contemplate-serial-mistreatment:
+    gloss: "{$mistreated.name} contemplate serial mistreatment by {$mistreater.name}"
+    roles:
+        $mistreated initiator
+        $mistreater absent
+        3 $past-action subject action [from {$mistreated.memories(tag='mistreatment', filter=lambda m: m.initiator is $mistreater)}] [1.0]
+    effects:
+        if {$mistreated.personality.vengeful > 10}:
+            queue hatch-revenge-scheme:
+                bindings:
+                    avenger: $mistreated
+                    victim: $mistreater
+                    priority: 1
+                    expires: 1000
+    salience:
+        $mistreated: 100
+action tell-about-major-event-today:
+    gloss: "{$speaker.name} tells {$interlocutor.name} about {$past_event}"
+    roles:
+        $speaker initiator
+        1-999 $interlocutor recipient
+        $major-event-today action subject [from {speaker.knowledge.major_events_today}]
+        0-9999 $overhearer bystander [0.5]
+    preconditions:
+        {not $interlocutor.knows_about($major-event-today)}
+    effects:
+        {$initiator.update_charge($interlocutor, 3)}
+        {$interlocutor.update_charge($initiator, 3)}
+    saliences:
+        loop {$this.all} as $x: 1000

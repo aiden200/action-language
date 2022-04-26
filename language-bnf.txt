@@ -1,1 +1,13 @@
 BNF
+
+<GLOSS> ::= gloss: <STRING>
+<ROLES> ::= roles: <NEWLINE> <LIST_OF_ROLES> <NEWLINE>
+<LIST_OF_ROLES> ::= <ROLE> <NEWLINE> <LIST_OF_ROLES>
+<LIST_OF_ROLES> ::= <ROLE>
+<ROLE> ::= <NUMBER_RANGE> <INPUT> <ROLE_NAME> <CHANCE> | <INPUT> <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT> <ROLE_NAME> 
+<ROLE_NAME> ::= initiator | recipient | symbol | location subject | bystander | initiator | absent subject
+
+<INPUT> ::= $(<a-z><a-Z>)+
+<STRING> ::= "(<a-z><A-Z><0-9> _{}!@#$%^&*\(\)-_=+[]\|;:,.<>/?)+"
+<NUMBER_RANGE> ::= <0-9>+-<0-9>+
+<CHANCE> ::= [0.<0-9>+]

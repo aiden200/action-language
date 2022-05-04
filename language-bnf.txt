@@ -1,18 +1,26 @@
 BNF
 
+
+<ACTION> ::= (special action | action): <BODY>
+<BODY> ::= <GLOSS>* <ROLES>* <PRECONDITIONS>* <EFFECTS>* <SALIENCE>* 
 <GLOSS> ::= gloss: <STRING> | <CODE>
 <ROLES> ::= roles: <NEWLINE> <LIST_OF_ROLES> <NEWLINE>
 <LIST_OF_ROLES> ::= <ROLE> <NEWLINE> <LIST_OF_ROLES>
 <LIST_OF_ROLES> ::= <ROLE>
-<PRECONDITIONS> ::= preconditions: <CODE>
+<PRECONDITIONS> ::= preconditions: <CODE>*
+<SALIENCE> ::= (saliences: | salience:) (<INPUT>: <NUMBER_RANGE>)* <LOOP>*
 <ROLE> ::= <NUMBER_RANGE> <INPUT> <ROLE_NAME> <CHANCE> | <INPUT> <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT> <ROLE_NAME> 
 <ROLE_NAME> ::= initiator | recipient | symbol | location subject | bystander | initiator | absent subject
-<EFFECTS> ::= 
+<EFFECTS> ::= effects: <CODE>* (<QUEUE> | <LOOP>)*
 
-<LOOP>
-<EFFECTS>
-<QUEUE>
-<CODE> ::= {<STRING>}+
+<LOOP> ::= <HEADER>: \n <EXPRESSION> | <HEADER>: \n begin \n (<EXPRESSION> \n)* \n end
+<HEADER> ::= if <CODE> | loop <CODE> as INPUT
+<EXPRESSION> ::= (<CODE>|<STRING>)*   
+<EXPRESSION> ::= 
+<EFFECTS> ::= //as many expresions
+<QUEUE> ::= (urgent queue | queue) ???
+<NEWLINE> ::= \n+
+<CODE> ::= {<STRING>+}
 <INPUT> ::= $(<a-z><a-Z>)+
 <STRING> ::= "(<a-z><A-Z><0-9> _{}!@#$%^&*\(\)-_=+[]\|;:,.<>/?)+"
 <NUMBER_RANGE> ::= <0-9>+-<0-9>+

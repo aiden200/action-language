@@ -21,7 +21,7 @@ BNF
 <SALIENCE> ::= (saliences: | salience:) (<INPUT>: <NUMBER_RANGE>)* <LOOP>* #TODO fix this
 
 <EXPRESSION> ::= <CODE> | <STRING>  | <CONDITIONAL> | <QUEUE>
-<CONDITIONAL> ::= <IF> | <LOOP>
+<CONDITIONAL> ::= <IF> | <LOOP> #TODO this part
 
 <LOOP> ::= <HEADER>: \n <EXPRESSION> | <HEADER>: \n begin \n (<EXPRESSION> \n)* \n end
 <HEADER> ::= if <CODE> | loop <CODE> as INPUT

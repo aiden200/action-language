@@ -33,9 +33,11 @@ BNF
 <ELSE> ::= else: <NEWLINE> <EXPRESSION> | else: <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end 
 
 
-<QUEUE> ::= (urgent queue | queue) ??? #TODO make queue 
+<QUEUE> ::= (urgent queue | queue) <MORE_ACTIONS>: <NEWLINE> <BINDINGS> ??? #TODO make queue rest of roles 
+<BINDINGS> ::= bindings: <NEWLINE> (<BINDING_ROLES> : <INPUT> | <BINDING_ROLES> = <INPUT>) |  (<BINDING_ROLES> : <INPUT> | <BINDING_ROLES> = <INPUT>) <BINDINGS> | <LOOP> | <LOOP> <BINDINGS>
+<MORE_ACTIONS> ::= <ACTION> | <ACTION> <MORE_ACTIONS>
 
-<FIELD_VALUE> ::= <FIELD_HEADER> : <INPUT> | <FIELD_HEADER> : <CODE>
+<FIELD_VALUE> ::= <FIELD_HEADER> : <INPUT> | <FIELD_HEADER> : <CODE> 
 
 
 
@@ -50,4 +52,5 @@ BNF
 <ROLE_NAME> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+
 <FIELD_HEADER> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+ | 
                     [past-action | priority | expires | abandon] | $(<a-z><a-Z>)+
+<BINDING_ROLES> ::= mistreated | mistreater | traveler | location | arsonist | mistreated | mistreater | reciprocator | instigator #ask about this
 

@@ -107,8 +107,8 @@ special action plan-arson:
             priority: 100
             expiration_code: {$this.id}
             kill_code: {$this.id}
-            location=$scene
-            time_of_day={$this.time_of_day}
+            location: $scene
+            time_of_day: {$this.time_of_day}
         urgent queue ascertain-witnesses-to-arson:
             bindings:
                 arsonist: $avenger

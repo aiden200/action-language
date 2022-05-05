@@ -13,20 +13,29 @@ BNF
 <LIST_OF_ROLES> ::= <ROLE>
 <ROLE> ::= <NUMBER_RANGE> <INPUT>: <ROLE_NAME> <CHANCE> | <INPUT>: <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT>: <ROLE_NAME> 
 
-<PRECONDITIONS> ::= preconditions: <CODE>*
+<PRECONDITIONS> ::= preconditions: <NEWLINE> <EXPRESSIONS>
 
-<EFFECTS> ::= effects: <NEWLINE> <EFFECT_LIST>
-<EFFECT_LIST> ::= <EXPRESSION> <NEWLINE> <EFFECT_LIST> | <EXPRESSION>
+<EFFECTS> ::= effects: <NEWLINE> <EXPRESSIONS>
 
-<SALIENCE> ::= (saliences: | salience:) (<INPUT>: <NUMBER_RANGE>)* <LOOP>* #TODO fix this
+<SALIENCE> ::= salience: <NEWLINE> <EXPRESSIONS>
 
-<EXPRESSION> ::= <CODE> | <STRING>  | <CONDITIONAL> | <QUEUE>
-<CONDITIONAL> ::= <IF> | <LOOP> #TODO this part
 
-<LOOP> ::= <HEADER>: \n <EXPRESSION> | <HEADER>: \n begin \n (<EXPRESSION> \n)* \n end
-<HEADER> ::= if <CODE> | loop <CODE> as INPUT
-<EXPRESSION> ::= 
-<QUEUE> ::= (urgent queue | queue) ???
+<EXPRESSIONS> ::= <EXPRESSION> <NEWLINE> <EXPRESSIONS>
+<EXPRESSIONS> ::= <EXPRESSION>
+<EXPRESSION> ::= <CODE> | <STRING>  | <CONDITIONAL> | <QUEUE> | <FIELD_VALUE> | <NUMBER>
+
+<CONDITIONAL> ::= <IF> | <LOOP> | <IF> <NEWLINE> <ELSE>
+
+<LOOP> ::= <LOOP_HEADER>: <NEWLINE> <EXPRESSION> | <HEADER>: <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end | <LOOP_HEADER>: <NUMBER>
+<LOOP_HEADER> ::= loop <CODE> as INPUT
+
+<IF> ::= if <CODE> : <NEWLINE> <EXPRESSION> | if <CODE> : <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end 
+<ELSE> ::= else: <NEWLINE> <EXPRESSION> | else: <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end 
+
+
+<QUEUE> ::= (urgent queue | queue) ??? #TODO make queue 
+
+<FIELD_VALUE> ::= <FIELD_HEADER> : <INPUT> | <FIELD_HEADER> : <CODE>
 
 
 
@@ -35,5 +44,10 @@ BNF
 <INPUT> ::= $(<a-z><a-Z>)+
 <STRING> ::= "(<a-z><A-Z><0-9> _{}!@#$%^&*\(\)-_=+[]\|;:,.<>/?)+"
 <NUMBER_RANGE> ::= <0-9>+-<0-9>+
+<NUMBER> ::= <0-9>+
+
 <CHANCE> ::= [0.<0-9>+] # TODO expand this 
 <ROLE_NAME> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+
+<FIELD_HEADER> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+ | 
+                    [past-action | priority | expires | abandon] | $(<a-z><a-Z>)+
+

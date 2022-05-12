@@ -11,7 +11,7 @@ BNF
 <ROLES> ::= roles: <NEWLINE> <LIST_OF_ROLES> 
 <LIST_OF_ROLES> ::= <ROLE> <NEWLINE> <LIST_OF_ROLES>
 <LIST_OF_ROLES> ::= <ROLE>
-<ROLE> ::= <NUMBER_RANGE> <INPUT>: <ROLE_NAME> <CHANCE> | <INPUT>: <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT>: <ROLE_NAME> 
+<ROLE> ::= <NUMBER_RANGE> <INPUT>: <ROLE_NAME> <CHANCE> | <INPUT>: <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT>: <ROLE_NAME> | <NUMBER> <INPUT>: <ROLE_NAME> | <INPUT>: <ROLE_NAME>
 
 <PRECONDITIONS> ::= preconditions: <NEWLINE> <EXPRESSIONS>
 
@@ -30,7 +30,7 @@ BNF
 <LOOP_HEADER> ::= loop <CODE> as INPUT
 
 <IF> ::= if <CODE> : <NEWLINE> <EXPRESSION> | if <CODE> : <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end 
-<ELSE> ::= else: <NEWLINE> <EXPRESSION> | else: <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end 
+<ELSE> ::= else: <NEWLINE> <EXPRESSION> | else: <NEWLINE> begin <NEWLINE> <EXPRESSIONS> <NEWLINE> end #need begin and end 
 
 
 <QUEUE> ::= (urgent queue | queue) <MORE_ACTIONS>: <NEWLINE> <BINDINGS> ??? #TODO make queue rest of roles 
@@ -43,10 +43,13 @@ BNF
 
 <NEWLINE> ::= \n+
 <CODE> ::= {<STRING>+}
-<INPUT> ::= $(<a-z><a-Z>)+
+<INPUT> ::= $(<a-z><A-Z>)+
 <STRING> ::= "(<a-z><A-Z><0-9> _{}!@#$%^&*\(\)-_=+[]\|;:,.<>/?)+"
+<NAME> ::= (<a-z><A-Z><0-9> _-)+
+<VARIABLE_NAME> ::= <NAME>
 <NUMBER_RANGE> ::= <0-9>+-<0-9>+
 <NUMBER> ::= <0-9>+
+<BINDING_POOL> ::= #TODO will always be in [] and start with "from"
 
 <CHANCE> ::= [0.<0-9>+] # TODO expand this 
 <ROLE_NAME> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+

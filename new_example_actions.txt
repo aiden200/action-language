@@ -20,11 +20,13 @@ action make-fun-of:
             priority: 1
             expires: 1000
         # If you're cruel, you like insulter more, else less
+        
         loop {$this.all} as $x:
             if {$x not in $this.nucleus or $x.personality.cruelty < 10}:
                 {$x.update_charge($insulter, -3)}
-            if {$x not in $this.nucleus and $x.personality.cruelty >= 10}:
-                {$x.update_charge($insulter, 3)}
+            else {$x not in $this.nucleus and $x.personality.cruelty >= 10}:
+                  {$x.update_charge($insulter, 3)}
+                
     salience:
         $insultee: 750
         $insulter: 200

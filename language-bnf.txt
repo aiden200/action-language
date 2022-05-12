@@ -53,4 +53,3 @@ BNF
 <FIELD_HEADER> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+ | 
                     [past-action | priority | expires | abandon] | $(<a-z><a-Z>)+
 <BINDING_ROLES> ::= mistreated | mistreater | traveler | location | arsonist | mistreated | mistreater | reciprocator | instigator #ask about this
-

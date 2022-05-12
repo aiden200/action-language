@@ -10,7 +10,6 @@ grammar = Grammar(
    number_range = ~"[<0-9>]+" "-" ~"[<0-9>]+"
    input = "$" ~"[<a-z><A-Z>]+"
    chance = "[0." ~"[<0-9>]+" "]"
-
 """)
 
 # | <INPUT>: <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT>: <ROLE_NAME> 

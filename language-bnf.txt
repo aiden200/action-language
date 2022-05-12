@@ -39,8 +39,6 @@ BNF
 
 <FIELD_VALUE> ::= <FIELD_HEADER> : <INPUT> | <FIELD_HEADER> : <CODE> 
 
-
-
 <NEWLINE> ::= \n+
 <CODE> ::= {<STRING>+}
 <INPUT> ::= $(<a-z><A-Z>)+

@@ -13,6 +13,14 @@ grammar = Grammar(
 
 """)
 
+grammar = Grammar(
+"""
+   gloss = newline "gloss:" spaces string spaces newline
+   string = ~"'[<a-z><A-Z><0-9> _}{.?]+'"
+   newline= "\\n"*
+   spaces = " "*
+""")
+# string = ~'"[<a-z><A-Z><0-9> _}{,.?]+"' / ~"'[<a-z><A-Z><0-9> _}{,.?]+'"
 # | <INPUT>: <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT>: <ROLE_NAME> 
 
 
@@ -22,5 +30,8 @@ input = '''
         $insultee recipient
         0-9999 $observer bystander [0.5]
 '''.replace('\t', '')
+input = '''
+gloss: '{traveler.name} decides to go to {destination.name}'
+'''
 
 print(grammar.parse(input))

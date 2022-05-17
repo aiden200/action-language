@@ -1,19 +1,22 @@
 BNF
 
-<ACTION> ::= (special action <NAME> | action <NAME>): <BODY>
+<ACTION> = ("special action" <NAME> | "action" <NAME>)":" <BODY>
 
-<BODY> ::= <GLOSS> NEWLINE <BODY> | <ROLES> NEWLINE <BODY> | <PRECONDITIONS> NEWLINE <BODY> | <EFFECTS> NEWLINE <BODY> | <SALIENCE> NEWLINE <BODY>
+<BODY> = <GLOSS> NEWLINE <BODY> | <ROLES> NEWLINE <BODY> | <PRECONDITIONS> NEWLINE <BODY> | <EFFECTS> NEWLINE <BODY> | <SALIENCE> NEWLINE <BODY>
 <BODY> ::= <GLOSS> | <ROLES> | <PRECONDITIONS> | <EFFECTS> | <SALIENCE>
 
-<GLOSS> ::= gloss: <STRING> 
+<GLOSS> ::= gloss: <STRING> --me
+gloss = newline "gloss:" spaces string spaces newline
 
 
-<ROLES> ::= roles: <NEWLINE> <LIST_OF_ROLES> 
-<LIST_OF_ROLES> ::= <ROLE> <NEWLINE> <LIST_OF_ROLES>
+roles = newline spaces "roles:" spaces newline spaces single_role+
+single_role = spaces role spaces newline
+role = number_range? spaces input? spaces role_name? spaces chance?
+
 <LIST_OF_ROLES> ::= <ROLE>
 <ROLE> ::= <NUMBER_RANGE> <INPUT>: <ROLE_NAME> <CHANCE> | <INPUT>: <ROLE_NAME> <CHANCE> | <NUMBER_RANGE> <INPUT>: <ROLE_NAME> | <NUMBER> <INPUT>: <ROLE_NAME> | <INPUT>: <ROLE_NAME>
 
-<PRECONDITIONS> ::= preconditions: <NEWLINE> <EXPRESSIONS>
+<PRECONDITIONS> ::= preconditions: <NEWLINE> <EXPRESSIONS> --me
 
 <EFFECTS> ::= effects: <NEWLINE> <EXPRESSIONS>
 
@@ -41,18 +44,27 @@ BNF
 
 
 
-<NEWLINE> ::= \n+
+newline= "\\n"+
+spaces = " "*
 <CODE> ::= {<STRING>+}
 <INPUT> ::= $(<a-z><A-Z>)+
+input = "$" ~"[<a-z><A-Z>]+"
 <STRING> ::= "(<a-z><A-Z><0-9> _{}!@#$%^&*\(\)-_=+[]\|;:,.<>/?)+"
+string = ~"[<a-z><A-Z><0-9> _{}!@#$%^&*\(\)-_=+[]\|;:,.<>/?]+"
 <NAME> ::= (<a-z><A-Z><0-9> _-)+
 <VARIABLE_NAME> ::= <NAME>
 <NUMBER_RANGE> ::= <0-9>+-<0-9>+
+number_range = ~"[<0-9>]+" "-" ~"[<0-9>]+"
 <NUMBER> ::= <0-9>+
 <BINDING_POOL> ::= #TODO will always be in [] and start with "from"
 
 <CHANCE> ::= [0.<0-9>+] # TODO expand this 
+chance = "[0." ~"[<0-9>]+" "]"
 <ROLE_NAME> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+
 <FIELD_HEADER> ::= [initiator | recipient | symbol | location | subject | bystander | absent]+ | 
                     [past-action | priority | expires | abandon] | $(<a-z><a-Z>)+
 <BINDING_ROLES> ::= mistreated | mistreater | traveler | location | arsonist | mistreated | mistreater | reciprocator | instigator #ask about this
+
+
+role_name = ~"[initiator | recipient | symbol | location | subject | bystander | absent]+"
+

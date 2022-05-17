@@ -163,16 +163,16 @@ special action start-fight:
                 abandon: {not $instigator.is_at($opponent.location)}
         if {$observer.personality.discord < -10 and $observer.personality.bravery > 0}:
             urgent queue break-up-fight:
-            bindings:
-                mediator: $observer
-                instigator: $instigator
-                opponent: $opponent
-            priority: 100
-            expiration_code: {$this.id}
-            kill_code: {$this.id}
-            location: {$this.location}
-            time_of_day: {$this.time_of_day}
-            abandon: {not $instigator.is_at($opponent.location)}
+                bindings:
+                    mediator: $observer
+                    instigator: $instigator
+                    opponent: $opponent
+                priority: 100
+                expiration_code: {$this.id}
+                kill_code: {$this.id}
+                location: {$this.location}
+                time_of_day: {$this.time_of_day}
+                abandon: {not $instigator.is_at($opponent.location)}
     saliences:
         $instigator: 10000
         $opponent: 10000

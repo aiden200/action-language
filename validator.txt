@@ -2,8 +2,8 @@ no duplicate fields anywhere
 if else alignment(else requires an if) and elif
 gloss is required 
 role is required
-preconditions are optional and effects are optional
 salience is required
+preconditions are optional and effects are optional
 all expressions must be contextually appropriate-including inside loops
 all the variables referenced are actual variables(should be in scope)
 no binding pool directive(the from at the start) for initiator role

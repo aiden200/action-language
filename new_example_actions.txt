@@ -38,7 +38,7 @@ action make-fun-of:
                     100
 
 action ridicule from make-fun-of:
-    gloss: {f"{$insulter.name} ridicules {$insultee.name}"}
+    gloss: "{traveler.name} decides to go to {destination.name}" # Wrong fields but same struture 
     preconditions:
         {$insulter.personality.cruelty > 25}
     salience:

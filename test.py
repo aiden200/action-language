@@ -17,9 +17,16 @@ grammar = Grammar(
   single_role = spaces role spaces newline
   role = number_range? spaces input? spaces role_name? spaces chance?
 
-
-  expressions = (spaces expression spaces newline)+
-  expression = code / string / "conditional" / "queue" / "field_value" / number
+  expression = (field_value / code  / string  / conditional / queue / number)
+  expressions = (spaces expression newline?)+
+  field_value = spaces string spaces ":" spaces (code / input) spaces newline?
+  conditional = (if (else / multilineelse)?) / (multilineif (else / multilineelse)?) / (loop / multilineloop)
+  loop = spaces "loop" spaces code spaces "as" spaces input spaces ":" spaces newline? spaces expression spaces newline?
+  multilineloop = spaces "loop" spaces code spaces "as" spaces input spaces ":" spaces newline spaces "begin" spaces newline spaces expressions spaces newline? spaces "end" spaces newline? spaces
+  multilineif = spaces "if" spaces code spaces ":" spaces newline spaces "begin" spaces  newline spaces expressions spaces newline? spaces "end" spaces newline?
+  multilineelse = spaces "else" spaces ":" spaces newline spaces "begin" spaces newline spaces expressions spaces newline? spaces "end" spaces newline?
+  else = spaces "else" spaces ":" spaces newline spaces expression spaces newline?
+  if = spaces "if" spaces code spaces ":" spaces newline spaces expression spaces newline?
   
   queue = ("urgent queue" spaces more_actions ":" newline queue_body) / ("queue" spaces more_actions ":" newline queue_body) 
   queue_body = bindings? newline priority? newline expiration_code? newline kill_code? newline location? newline time_of_day? newline abandon? newline

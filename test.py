@@ -3,10 +3,9 @@
 from parsimonious.grammar import Grammar
 grammar = Grammar(
  '''
- test= spaces newline spaces manditory_body spaces newline
   action = (spaces newline? spaces "special action" spaces name ":" newline manditory_body) / (spaces newline? spaces "action" spaces name ":" spaces newline manditory_body) 
   manditory_body = gloss spaces newline? spaces roles? spaces newline? spaces body? spaces newline? spaces salience spaces newline? spaces body? spaces newline? spaces
-  body = (preconditions newline body) / (effects newline body) 
+  body = (preconditions newline body) / (effects newline body) / spaces
 
  
   gloss = spaces "gloss:" spaces string spaces newline?
@@ -17,7 +16,7 @@ grammar = Grammar(
   single_role = spaces role spaces newline?
   role = number_range? spaces input? spaces role_name? spaces chance?
 
-  expression = (field_value / code  / string  / conditional / queue / number / variable)
+  expression = (field_value / code  / string  / conditional / queue / number / variable / spaces)
   variable = spaces input ":" spaces expression spaces 
   expressions = (spaces expression spaces newline?)+
   field_value = spaces string spaces ":" spaces (code / input) spaces newline?
@@ -50,8 +49,8 @@ grammar = Grammar(
   number_range = ~"[<0-9>]+" "-" ~"[<0-9>]+"
   input = "$" ~"[<a-z><A-Z>]+"
   chance = "[0." ~"[<0-9>]+" "]"
-  code = "{" ~"[<a-z><A-Z><0-9>*&()^%@!#$@,./;:'?><=\[\] ]+" "}"
-  string = (~'"[<a-z><A-Z><0-9>*&()^%@!#$@,./;?><{} ]+"') / (~"'[<a-z><A-Z><0-9>*&()^%@!#@,./;?><{} ]+'")
+  code = ("{" ~"[<a-z><A-Z><0-9>*&()^%@!#$@,./;:'?>_\-<=\[\] ]+" "}") / ("{" ~'[<a-z><A-Z><0-9>*&()^%@!#$@,./;:"?>_\-<=\[\] ]+' "}")
+  string = (~'"[<a-z><A-Z><0-9>*&()^%@!#$@,./;?\-><{} ]+"') / (~"'[<a-z><A-Z><0-9>*&()^%@!#@,./;?><{} ]+'")
 '''
 )
 #    
@@ -60,21 +59,32 @@ grammar = Grammar(
 
 
 input = '''
+action make-fun-of:
     gloss: "{$insulter.name} makes fun of {$insultee.name}"
     roles:
         $insulter initiator 
         $insultee recipient
         0-9999 $observer bystander [0.5]
+    preconditions:
+        {$insulter.personality.cruelty > 10}
+    effects:
+        {$insultee.update_charge($insulter, -5)}
+        {$insultee.update_spark($insulter, -5)}
+        {$insultee.associate($this, "embarrassment,mistreatment")}
+        
+        loop {$this.all} as $x:
+        
+            if {$x not in $this.nucleus or $x.personality.cruelty < 10}:
+                {$x.update_charge($insulter, -3)}
+        
+                
     salience:
         $insultee: 750
         $insulter: 200
         loop {$this.all} as $x:
-            if {$x not in $this.nucleus}:
+            if {$x not in $this.nucleus}: 
                 if {$x.salience($insultee) >= 1.5}:
                     500
-                else:
-                    100
-
 
 '''.replace('\t', '')
 

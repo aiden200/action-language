@@ -88,5 +88,16 @@ action make-fun-of:
 
 '''.replace('\t', '')
 
+input = '''
+special action contemplate-serial-mistreatment:
+    gloss: "{$mistreated.name} contemplate serial mistreatment by {$mistreater.name}"
+    roles:
+        $mistreated initiator
+        $mistreater absent
+    salience:
+        $mistreated: 100
+'''.replace('\t', '')
+
+
 
 print((grammar.parse(input)))

@@ -73,11 +73,11 @@ action make-fun-of:
         {$insultee.update_charge($insulter, -5)}
         {$insultee.update_spark($insulter, -5)}
         {$insultee.associate($this, "embarrassment,mistreatment")}
-        
         loop {$this.all} as $x:
-        
+            
             if {$x not in $this.nucleus or $x.personality.cruelty < 10}:
                 {$x.update_charge($insulter, -3)}
+            
         
                 
     salience:
@@ -108,7 +108,7 @@ def printTree(node, depth = 0):
     ret = ""
 
     show = ["expression", "gloss", "effects", "roles", ]
-    #show = []
+    show = []
 
 
     if(node.text.replace(' ', '').replace('\n', '') == ""):
@@ -129,7 +129,34 @@ def printTree(node, depth = 0):
     
     return ret
 
-print(printTree(parsed))
+def validateTree(node):
+
+    if(node.expr_name == "expressions"):
+        validateExpressions(node)
+
+    if node.children:
+        for n in node:
+            validateTree(n)
+
+def validateExpressions(expressions):
+    last_was_if = False
+    for expression in expressions.children:
+        for child in expression.children:
+            if(child.expr_name == "expression"):
+                for expressionChild in child:
+                    if expressionChild.expr_name == "conditional":
+                        if expressionChild.text[0:2] == "else" and not last_was_if:
+                            print("Else with no if")
+                        if expressionChild.text[0:2] == "if":
+                            last_was_if = True
+                        else:
+                            lasat_was_if = False
+                        
+
+
+validateTree(parsed)
+
+# print(printTree(parsed))
 
 
 

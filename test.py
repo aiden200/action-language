@@ -1,6 +1,8 @@
 # -----TODO add hashtag string here to catch for comments 
 
 from parsimonious.grammar import Grammar
+from parsimonious.nodes import NodeVisitor
+
 grammar = Grammar(
  '''
   action = (spaces newline? spaces "special action" spaces name ":" newline manditory_body) / (spaces newline? spaces "action" spaces name ":" spaces newline manditory_body) 
@@ -88,16 +90,46 @@ action make-fun-of:
 
 '''.replace('\t', '')
 
-input = '''
-special action contemplate-serial-mistreatment:
-    gloss: "{$mistreated.name} contemplate serial mistreatment by {$mistreater.name}"
-    roles:
-        $mistreated initiator
-        $mistreater absent
-    salience:
-        $mistreated: 100
-'''.replace('\t', '')
+# input = '''
+# special action contemplate-serial-mistreatment:
+#     gloss: "{$mistreated.name} contemplate serial mistreatment by {$mistreater.name}"
+#     roles:
+#         $mistreated initiator
+#         $mistreater absent
+#     salience:
+#         $mistreated: 100
+# '''.replace('\t', '')
+
+
+parsed = grammar.parse(input)
+
+
+def printTree(node, depth = 0):
+    ret = ""
+
+    show = ["expression", "gloss", "effects", "roles", ]
+    #show = []
+
+
+    if(node.text.replace(' ', '').replace('\n', '') == ""):
+        return ""
+    if node.expr_name:
+        ret= "<Node called - " + node.expr_name + " with body - " + node.text.strip() + ">\n"
+    else:
+        # ret = "<Node with body - " + node.text + ">\n"
+        ret = ""
+
+    if(len(show) != 0 and node.expr_name not in show):
+        ret = ""
+
+    if node.children:
+        for n in node:
+            ret+=printTree(n, depth+1)
+
+    
+    return ret
+
+print(printTree(parsed))
 
 
 
-print((grammar.parse(input)))
